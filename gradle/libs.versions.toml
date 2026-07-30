@@ -1,0 +1,32 @@
+metadata.format.version = "1.1"
+
+[versions]
+
+# Paper API
+# Compiled against the oldest supported platform, same floor as commons.
+paper = "1.18.2-R0.1-SNAPSHOT"
+
+# Config
+okaeri = "5.0.13"
+
+# Scheduling
+folialib = "0.5.1"
+
+# Vulpine
+commons = "0.1.0"
+
+# Testing
+junit = "6.0.1"
+
+[libraries]
+
+paper = { group = "io.papermc.paper", name = "paper-api", version.ref = "paper" }
+commons = { group = "top.vulpine", name = "commons", version.ref = "commons" }
+
+okaeri-core = { module = "eu.okaeri:okaeri-configs-core", version.ref = "okaeri" }
+okaeri-yaml-snakeyaml = { module = "eu.okaeri:okaeri-configs-yaml-snakeyaml", version.ref = "okaeri" }
+
+folialib = { group = "com.tcoded", name = "FoliaLib", version.ref = "folialib" }
+
+junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
