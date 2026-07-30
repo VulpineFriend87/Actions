@@ -12,16 +12,15 @@ import java.util.function.Function;
 /**
  * Who an action applies to.
  *
- * <p>In the original parser this was an {@code if/else} chain on {@code "player"} or
- * {@code "global"}, repeated inside every action method. Here it is resolved once
- * and shared, so adding a selector is one change rather than an edit to each action.</p>
+ * <p>Resolved once and shared by every action, so adding a selector is one change
+ * rather than an edit to each action.</p>
  *
- * <p>A target keeps the text it was parsed from. A lambda cannot describe itself,
- * and without the original text a selector like {@code world:lobby} could not be
- * written back — saving the config would quietly turn it into something else.</p>
+ * <p>A target keeps the text it was parsed from, because a lambda cannot describe
+ * itself: without it, saving the config would turn a selector like
+ * {@code world:lobby} into something else.</p>
  *
- * <p>{@code player} and {@code global} are accepted as aliases for {@code self} and
- * {@code all}, so configs written against the old format keep working.</p>
+ * <p>{@code player} and {@code global} are accepted as older names for {@code self}
+ * and {@code all}.</p>
  */
 public final class Target {
 

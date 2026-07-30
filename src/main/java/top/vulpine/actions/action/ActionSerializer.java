@@ -17,9 +17,8 @@ import java.util.Objects;
  * {@link DeserializationData#isValue()} distinguishes them. Writing is symmetric —
  * {@link SerializationData#setValue(Object)} produces a plain scalar again.</p>
  *
- * <p>That is what lets a list mix the two forms, and it is why upgrading a config
- * costs nothing: every one-liner written against the old format still loads, and
- * still gets written back as a one-liner.</p>
+ * <p>That is what lets a list mix the two forms: an inline entry still loads, and is
+ * written back inline unless migration is enabled.</p>
  *
  * <h2>Unreadable entries are kept, not dropped</h2>
  * <p>A malformed or unknown action is warned about by the registry and becomes an

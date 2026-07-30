@@ -36,9 +36,7 @@ public final class StopAction implements Action {
      * Starts building one in code, for a config default.
      *
      * <p>There is nothing to configure, so {@code builder().build()} is all there is.
-     * It exists anyway so every action is created the same way — one pattern to learn
-     * across fourteen actions is worth a redundant call on the one that takes no
-     * settings.</p>
+     * It exists so that every action is created the same way.</p>
      *
      * @return a builder
      */

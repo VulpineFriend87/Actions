@@ -100,8 +100,8 @@ class SimpleActionsTest {
     @DisplayName("bare numbers in a title one-liner are ticks, not milliseconds")
     void titleShorthandUnits() throws IOException {
 
-        // The old format passed these straight to sendTitle, so they were ticks.
-        // Reading them as milliseconds would make every existing title flash by.
+        // Bare numbers in a title are ticks, unlike a delay. Reading them as
+        // milliseconds would make every title configured this way flash by.
         TitleAction action = assertInstanceOf(TitleAction.class, first("""
                 actions:
                   - "[title] self; Ciao; Sottotitolo; 20; 60; 20"
@@ -338,8 +338,8 @@ class SimpleActionsTest {
     @DisplayName("the two duration readings differ only for bare numbers")
     void durationUnits() {
 
-        // Same input, deliberately different answers, because the old format used
-        // milliseconds for delays and ticks for titles.
+        // Same input, different answers: the inline format uses milliseconds for
+        // delays and ticks for titles.
         assertEquals(4L, Ticks.parse("200", 0L));
         assertEquals(200L, Ticks.parseTicks("200", 0L));
 

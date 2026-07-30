@@ -11,10 +11,9 @@ import java.util.Locale;
  * read as milliseconds, which is what the original format meant, so existing
  * configs keep their timing.</p>
  *
- * <p>The original code did {@code milliseconds / 50} with integer division, so
- * anything under 50ms silently became no delay at all. Here a positive duration
- * always waits at least one tick — 20ms cannot be honored exactly, but rounding it
- * to "no delay" is the more surprising of the two answers.</p>
+ * <p>A positive duration always waits at least one tick. A value such as 20ms cannot be
+ * honoured exactly, and rounding it down to no delay at all would be the more
+ * surprising of the two answers.</p>
  */
 public final class Ticks {
 
@@ -24,11 +23,10 @@ public final class Ticks {
     /**
      * Like {@link #parse}, but a bare number means <strong>ticks</strong>.
      *
-     * <p>The two entry points exist because the old format was inconsistent:
-     * {@code [DELAY] 200} was milliseconds, while {@code [TITLE] …; 20; 60; 20} was
-     * ticks, because those numbers went straight to {@code sendTitle}. Reading a bare
-     * number the same way everywhere would silently retime every existing config —
-     * either titles 20× too fast or delays 20× too slow.</p>
+     * <p>Two entry points exist because the deprecated inline format is inconsistent:
+     * {@code [delay] 200} means milliseconds, while the numbers in
+     * {@code [title] …; 20; 60; 20} mean ticks. Reading a bare number the same way in
+     * both places would retime every config written against that format.</p>
      *
      * @param raw the configured duration
      * @param fallback what to return when it cannot be read

@@ -23,9 +23,7 @@ import java.util.List;
  * - "[actionbar] self; <yellow>Teletrasporto"
  * }</pre>
  *
- * <p>Sent through Adventure rather than {@code player.spigot().sendMessage(
- * ChatMessageType.ACTION_BAR, …)}, which is the workaround the original code needed
- * and which required bungeecord-chat as a dependency.</p>
+ * <p>Sent through Adventure, so no bungeecord-chat dependency is involved.</p>
  */
 public final class ActionBarAction implements Action {
 

@@ -15,7 +15,7 @@ import top.vulpine.actions.action.Ticks;
  *   time: 3s
  *
  * - "[delay] 3s"
- * - "[delay] 200"     # no unit: milliseconds, as the old format meant
+ * - "[delay] 200"     # no unit: milliseconds, in the inline format
  * }</pre>
  *
  * <p>The action only reports how long to wait. Scheduling and resumption belong to

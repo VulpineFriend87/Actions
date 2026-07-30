@@ -29,17 +29,17 @@ import java.util.Locale;
  * }</pre>
  *
  * <h2>Namespaced keys, not enum names</h2>
- * <p>Deliberately never touches {@code org.bukkit.Sound}: that type changed from a
- * class to an interface in 1.21.3, so a jar compiled against an older API cannot call
+ * <p>Never touches {@code org.bukkit.Sound}: that type changed from a class to an
+ * interface in 1.21.3, so a jar compiled against an older API cannot call
  * {@code Sound.valueOf} at all. Sending the key over the protocol behaves the same on
  * every version, and lets resource pack sounds work too.</p>
  *
- * <p>This means {@code ENTITY_PLAYER_LEVELUP} is <strong>not</strong> accepted — keys
- * are lowercase and dotted ({@code entity.player.levelup}). The two are not related by
- * a string transform: 860 of the 1611 vanilla sounds keep an underscore inside a
- * segment, so {@code BLOCK_NOTE_BLOCK_PLING} is {@code block.note_block.pling}, not
- * {@code block.note.block.pling}. Translating old configs needs the server's own sound
- * registry and belongs in the plugin doing the migration, not here.</p>
+ * <p>{@code ENTITY_PLAYER_LEVELUP} is therefore <strong>not</strong> accepted — keys
+ * are lowercase and dotted ({@code entity.player.levelup}). The two forms are not
+ * related by a string transform: many sounds keep an underscore inside a segment, so
+ * {@code BLOCK_NOTE_BLOCK_PLING} is {@code block.note_block.pling} and not
+ * {@code block.note.block.pling}. Translating an existing config needs the server's own
+ * sound registry, which belongs in the plugin doing the migration.</p>
  *
  * <h2>Validated when the config loads</h2>
  * <p>{@link Key#key(String)} throws on a malformed key. Left to runtime that would be

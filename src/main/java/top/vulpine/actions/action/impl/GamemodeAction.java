@@ -25,9 +25,9 @@ import java.util.Locale;
  * - "[gamemode] self; adventure"
  * }</pre>
  *
- * <p>{@code GameMode} is a plain enum and has stayed one, unlike {@code Sound}, so
- * {@code valueOf} is safe here. Verified against both 1.18.2 and current Paper rather
- * than assumed — the same assumption is what broke the sound action.</p>
+ * <p>{@code org.bukkit.GameMode} is a plain enum on every supported version, so
+ * {@code valueOf} is safe here — unlike {@code org.bukkit.Sound}, which became an
+ * interface in 1.21.3.</p>
  */
 public final class GamemodeAction implements Action {
 

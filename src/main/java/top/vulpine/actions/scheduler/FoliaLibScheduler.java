@@ -33,11 +33,10 @@ import java.util.Objects;
  * its own {@link ActionScheduler} never needs FoliaLib on the classpath at all.</p>
  *
  * <h2>Why an interface in between</h2>
- * <p>{@link ActionScheduler} has four methods and this adapter is the only thing that
- * touches FoliaLib. If FoliaLib changes its API — and it has, which is why the method
- * shapes here were read off the jar rather than assumed — the break is a compile error
- * in one file instead of a {@code NoSuchMethodError} in whichever plugin happens to
- * fire an action first.</p>
+ * <p>{@link ActionScheduler} has two methods and this adapter is the only thing that
+ * touches FoliaLib. If FoliaLib changes its API, the break is a compile error in one
+ * file rather than a {@code NoSuchMethodError} in whichever plugin fires an action
+ * first. It also keeps the executor testable without a running server.</p>
  */
 public final class FoliaLibScheduler implements ActionScheduler {
 

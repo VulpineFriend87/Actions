@@ -13,10 +13,8 @@ import java.util.TreeSet;
 /**
  * Maps a {@code type} id to the code that builds that action.
  *
- * <p>Adding an action is a registration, not an edit to a switch, so a consuming
- * plugin can add its own without forking the library — which is what the copies of
- * the original parser actually needed: one grew a {@code FLAG} case, another an
- * {@code arena} target, and each fork then had to be maintained separately.</p>
+ * <p>Adding an action is a registration rather than an edit to a switch, so a
+ * consuming plugin can add its own vocabulary without forking the library.</p>
  */
 public final class ActionRegistry {
 

@@ -154,8 +154,8 @@ class ActionExecutorTest {
     void throwingActionDoesNotKillTheList() {
 
         Action broken = action("broken", context -> {
-            // An Error, not an Exception: this is the shape of the sound bug, where
-            // catching Exception let one bad line abandon everything after it.
+            // An Error, not an Exception. Catching only Exception would let a linkage
+            // failure in one action abandon everything after it.
             throw new IncompatibleClassChangeError("simulated linkage failure");
         });
 

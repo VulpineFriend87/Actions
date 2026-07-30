@@ -120,8 +120,8 @@ public final class Condition {
                 case "not" -> {
 
                     if (value instanceof List) {
-                        // Ambiguous on purpose: "none of these" and "not all of these"
-                        // both read naturally, so require the author to say which.
+                        // "none of these" and "not all of these" both read naturally
+                        // from a list, so the author has to say which one they mean.
                         Actions.warn("'not' takes a single condition, not a list. "
                                 + "Wrap it: not: { any: [...] } for 'none of these'.");
                         parts.add(context -> false);

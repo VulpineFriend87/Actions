@@ -237,8 +237,8 @@ class ActionSerializerTest {
         assertEquals("all", assertInstanceOf(MessageAction.class, config.actions.get(0)).target().raw(),
                 "'global' should still mean everyone");
 
-        // The old format took milliseconds, so 200 must stay 4 ticks rather than
-        // becoming 200 ticks and silently changing every existing config's timing.
+        // A bare number in the inline format is milliseconds, so 200 must stay 4 ticks
+        // rather than becoming 200 and retiming every config that uses it.
         assertEquals(4L, assertInstanceOf(DelayAction.class, config.actions.get(1)).ticks());
     }
 }
