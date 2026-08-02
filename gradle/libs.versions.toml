@@ -10,7 +10,7 @@ paper = "1.18.2-R0.1-SNAPSHOT"
 okaeri = "5.0.13"
 
 # Scheduling
-folialib = "0.5.1"
+folialib = "0.5.2"
 
 # Vulpine
 commons = "0.1.0"
