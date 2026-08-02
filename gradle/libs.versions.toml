@@ -16,7 +16,7 @@ folialib = "0.5.1"
 commons = "0.1.0"
 
 # Testing
-junit = "6.0.1"
+junit = "6.1.2"
 
 [libraries]
 
