@@ -13,7 +13,7 @@ okaeri = "5.0.13"
 folialib = "0.5.2"
 
 # Vulpine
-commons = "0.1.0"
+commons = "0.2.0"
 
 # Testing
 junit = "6.1.2"
