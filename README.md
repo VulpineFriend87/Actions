@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    implementation("top.vulpine:actions:0.1.0")
+    implementation("top.vulpine:actions:0.2.0")
     implementation("eu.okaeri:okaeri-configs-yaml-bukkit:5.0.13")
     implementation("eu.okaeri:okaeri-configs-serdes-bukkit:5.0.13")
 
