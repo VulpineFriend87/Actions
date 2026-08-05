@@ -1,8 +1,8 @@
 package top.vulpine.actions.action;
 
+import com.tcoded.folialib.impl.PlatformScheduler;
 import org.bukkit.entity.Player;
 import top.vulpine.actions.Actions;
-import top.vulpine.actions.scheduler.ActionScheduler;
 import top.vulpine.commons.text.Colorize;
 
 import java.util.LinkedHashMap;
@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class ActionContext {
 
     private final Player player;
-    private final ActionScheduler scheduler;
+    private final PlatformScheduler scheduler;
     private final Map<String, String> values;
     private final SequenceRegistry sequences;
 
@@ -50,10 +50,10 @@ public final class ActionContext {
     }
 
     /**
-     * @param scheduler how delayed and region-bound work is dispatched
+     * @param scheduler FoliaLib's scheduler, as in {@code new FoliaLib(plugin).getScheduler()}
      * @return a builder
      */
-    public static Builder builder(final ActionScheduler scheduler) {
+    public static Builder builder(final PlatformScheduler scheduler) {
         return new Builder(scheduler);
     }
 
@@ -65,9 +65,9 @@ public final class ActionContext {
     }
 
     /**
-     * @return the scheduler
+     * @return the scheduler actions dispatch their work through
      */
-    public ActionScheduler scheduler() {
+    public PlatformScheduler scheduler() {
         return scheduler;
     }
 
@@ -184,12 +184,12 @@ public final class ActionContext {
      */
     public static final class Builder {
 
-        private final ActionScheduler scheduler;
+        private final PlatformScheduler scheduler;
         private final Map<String, String> values = new LinkedHashMap<>();
         private Player player;
         private SequenceRegistry sequences;
 
-        private Builder(final ActionScheduler scheduler) {
+        private Builder(final PlatformScheduler scheduler) {
             this.scheduler = Objects.requireNonNull(scheduler, "scheduler");
         }
 

@@ -106,7 +106,7 @@ class IfActionTest {
 
         FakeScheduler scheduler = new FakeScheduler();
 
-        ActionExecutor.run(config.actions, ActionContext.builder(scheduler)
+        ActionExecutor.run(config.actions, ActionContext.builder(scheduler.platform())
                 .value("level", 12)
                 .build());
 
@@ -130,7 +130,7 @@ class IfActionTest {
         FakeScheduler scheduler = new FakeScheduler();
 
         ActionExecutor executor = ActionExecutor.run(config.actions,
-                ActionContext.builder(scheduler).build());
+                ActionContext.builder(scheduler.platform()).build());
 
         assertEquals(0, scheduler.pending());
         assertTrue(executor.finished());

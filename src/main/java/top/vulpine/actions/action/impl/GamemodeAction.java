@@ -153,7 +153,7 @@ public final class GamemodeAction implements Action {
         List<Player> players = target.resolve(context);
 
         for (Player player : players) {
-            context.scheduler().run(player, () -> player.setGameMode(mode));
+            context.scheduler().runAtEntity(player, task -> player.setGameMode(mode));
         }
 
         return Flow.CONTINUE;

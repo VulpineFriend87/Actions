@@ -187,12 +187,15 @@ public final class CommandAction implements Action {
         String line = expanded.startsWith("/") ? expanded.substring(1) : expanded;
 
         if (asConsole) {
-            context.scheduler().run(null, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), line));
+            // No entity to anchor to, so this belongs on the global region. Next tick
+            // rather than now: on a regionised server there is no "right now" that is
+            // safe from an arbitrary thread.
+            context.scheduler().runNextTick(task -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), line));
             return Flow.CONTINUE;
         }
 
         for (Player player : target.resolve(context)) {
-            context.scheduler().run(player, () -> player.performCommand(line));
+            context.scheduler().runAtEntity(player, task -> player.performCommand(line));
         }
 
         return Flow.CONTINUE;

@@ -210,7 +210,7 @@ public final class TeleportAction implements Action {
         for (Player player : players) {
             // teleportAsync rather than teleport: the latter throws across regions on
             // Folia, and this is exactly the call that crosses them.
-            context.scheduler().run(player, () -> player.teleportAsync(destination));
+            context.scheduler().runAtEntity(player, task -> player.teleportAsync(destination));
         }
 
         return Flow.CONTINUE;

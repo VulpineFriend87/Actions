@@ -1,7 +1,7 @@
 package top.vulpine.actions.action;
 
+import com.tcoded.folialib.wrapper.task.WrappedTask;
 import top.vulpine.actions.Actions;
-import top.vulpine.actions.scheduler.Cancellable;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -37,7 +37,9 @@ public final class ActionExecutor {
     private final ActionContext context;
 
     private volatile boolean cancelled;
-    private Cancellable pending = Cancellable.NOOP;
+
+    /** The delayed resume, while one is waiting. Null when nothing is pending. */
+    private WrappedTask pending;
 
     /**
      * @param actions the list to run
@@ -71,9 +73,13 @@ public final class ActionExecutor {
      * intended for a player quitting while a delayed list is still pending.
      */
     public void cancel() {
+
         cancelled = true;
-        pending.cancel();
-        pending = Cancellable.NOOP;
+
+        if (pending != null) {
+            pending.cancel();
+            pending = null;
+        }
     }
 
     /**
@@ -146,9 +152,9 @@ public final class ActionExecutor {
 
     private void schedule(final long ticks) {
 
-        pending = context.scheduler().runLater(context.player(), () -> {
+        Runnable resume = () -> {
 
-            pending = Cancellable.NOOP;
+            pending = null;
 
             // A player can log out during the wait. Their region is gone and most
             // actions would fail one by one, so drop the rest of the list quietly.
@@ -158,8 +164,14 @@ public final class ActionExecutor {
             }
 
             run();
+        };
 
-        }, ticks);
+        // With no player there is no region to anchor to, so the work belongs on the
+        // global one. FoliaLib hands back null when the player is already gone, which
+        // leaves nothing pending and nothing to cancel.
+        pending = context.player() == null
+                ? context.scheduler().runLater(resume, ticks)
+                : context.scheduler().runAtEntityLater(context.player(), resume, ticks);
     }
 
     /**

@@ -83,7 +83,7 @@ class FlowActionsTest {
 
         FakeScheduler scheduler = new FakeScheduler();
         ActionExecutor executor = ActionExecutor.run(config.actions,
-                ActionContext.builder(scheduler).build());
+                ActionContext.builder(scheduler.platform()).build());
 
         assertEquals(0, scheduler.pending(), "nothing after the stop should have run");
         assertTrue(executor.finished());
@@ -112,7 +112,7 @@ class FlowActionsTest {
         assertEquals(2, action.actions().size());
 
         FakeScheduler scheduler = new FakeScheduler();
-        ActionExecutor.run(config.actions, ActionContext.builder(scheduler).build());
+        ActionExecutor.run(config.actions, ActionContext.builder(scheduler.platform()).build());
 
         // One delay per pass: three pauses, then done.
         int pauses = 0;
@@ -205,7 +205,7 @@ class FlowActionsTest {
         for (int attempt = 0; attempt < 50; attempt++) {
 
             FakeScheduler scheduler = new FakeScheduler();
-            ActionExecutor.run(config.actions, ActionContext.builder(scheduler).build());
+            ActionExecutor.run(config.actions, ActionContext.builder(scheduler.platform()).build());
 
             assertEquals(1, scheduler.pending(), "exactly one branch must run");
         }
@@ -237,7 +237,7 @@ class FlowActionsTest {
 
         for (int attempt = 0; attempt < 200; attempt++) {
 
-            ActionContext context = ActionContext.builder(new FakeScheduler()).build();
+            ActionContext context = ActionContext.builder(new FakeScheduler().platform()).build();
             ActionExecutor.run(config.actions, context);
 
             if ("heavy".equals(context.variables().get("picked"))) {
@@ -280,7 +280,7 @@ class FlowActionsTest {
                     value: "ciao %name%"
                 """);
 
-        ActionContext context = ActionContext.builder(new FakeScheduler())
+        ActionContext context = ActionContext.builder(new FakeScheduler().platform())
                 .value("name", "Vulpine")
                 .build();
 
@@ -303,7 +303,7 @@ class FlowActionsTest {
                     value: "%name%"
                 """);
 
-        ActionContext context = ActionContext.builder(new FakeScheduler())
+        ActionContext context = ActionContext.builder(new FakeScheduler().platform())
                 .value("name", "originale")
                 .build();
 
@@ -324,7 +324,7 @@ class FlowActionsTest {
                     value: "%tricky%"
                 """);
 
-        ActionContext context = ActionContext.builder(new FakeScheduler())
+        ActionContext context = ActionContext.builder(new FakeScheduler().platform())
                 .value("tricky", "a<b")
                 .build();
 
@@ -356,7 +356,7 @@ class FlowActionsTest {
 
         FakeScheduler scheduler = new FakeScheduler();
 
-        ActionExecutor.run(config.actions, ActionContext.builder(scheduler)
+        ActionExecutor.run(config.actions, ActionContext.builder(scheduler.platform())
                 .sequences(registry)
                 .build());
 
@@ -375,7 +375,7 @@ class FlowActionsTest {
                   - "[run] nonesiste"
                 """);
 
-        ActionContext context = ActionContext.builder(new FakeScheduler()).sequences(registry).build();
+        ActionContext context = ActionContext.builder(new FakeScheduler().platform()).sequences(registry).build();
 
         ActionExecutor.run(config.actions, context);
         ActionExecutor.run(config.actions, context);
@@ -393,7 +393,7 @@ class FlowActionsTest {
         ActionExecutor.run(load("""
                 actions:
                   - "[run] welcome"
-                """).actions, ActionContext.builder(new FakeScheduler()).build());
+                """).actions, ActionContext.builder(new FakeScheduler().platform()).build());
 
         assertTrue(warnings.stream().anyMatch(w -> w.contains("sequences(registry)")), warnings.toString());
     }
@@ -410,7 +410,7 @@ class FlowActionsTest {
         SequenceRegistry registry = new SequenceRegistry();
         registry.put("loop", loop.actions);
 
-        ActionExecutor.run(loop.actions, ActionContext.builder(new FakeScheduler())
+        ActionExecutor.run(loop.actions, ActionContext.builder(new FakeScheduler().platform())
                 .sequences(registry)
                 .build());
 

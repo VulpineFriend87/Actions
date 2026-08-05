@@ -131,7 +131,7 @@ public final class ActionBarAction implements Action {
         Component rendered = Colorize.color(context.expand(text));
 
         for (Player player : players) {
-            context.scheduler().run(player, () -> player.sendActionBar(rendered));
+            context.scheduler().runAtEntity(player, task -> player.sendActionBar(rendered));
         }
 
         return Flow.CONTINUE;

@@ -12,18 +12,15 @@ repositories {
 }
 
 dependencies {
-    // Exposed on the API surface: Action reads/writes okaeri serdes types and
-    // renders through commons' Colorize.
+    // Exposed on the API surface: Action reads/writes okaeri serdes types, renders
+    // through commons' Colorize, and dispatches through FoliaLib's scheduler.
     api(libs.okaeri.core)
     api(libs.commons)
+    api(libs.folialib)
 
     compileOnly(libs.paper)
 
-    // Optional adapter only; consumers that use FoliaLib provide it themselves.
-    compileOnly(libs.folialib)
-
     testImplementation(libs.paper)
-    testImplementation(libs.folialib)
     testImplementation(libs.okaeri.yaml.snakeyaml)
     testImplementation(libs.junit)
     testRuntimeOnly(libs.junit.launcher)

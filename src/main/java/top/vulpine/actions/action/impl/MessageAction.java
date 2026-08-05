@@ -149,7 +149,7 @@ public final class MessageAction implements Action {
             Component rendered = Colorize.color(context.expand(line));
 
             for (Player player : players) {
-                context.scheduler().run(player, () -> player.sendMessage(rendered));
+                context.scheduler().runAtEntity(player, task -> player.sendMessage(rendered));
             }
         }
 

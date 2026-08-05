@@ -225,7 +225,7 @@ public final class TitleAction implements Action {
         Title composed = Title.title(renderedTitle, renderedSubtitle, times);
 
         for (Player player : players) {
-            context.scheduler().run(player, () -> player.showTitle(composed));
+            context.scheduler().runAtEntity(player, task -> player.showTitle(composed));
         }
 
         return Flow.CONTINUE;

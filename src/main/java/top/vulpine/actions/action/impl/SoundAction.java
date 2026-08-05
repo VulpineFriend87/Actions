@@ -273,7 +273,7 @@ public final class SoundAction implements Action {
         Sound played = Sound.sound(sound.name(), source, volume, pitch);
 
         for (Player player : players) {
-            context.scheduler().run(player, () -> player.playSound(played));
+            context.scheduler().runAtEntity(player, task -> player.playSound(played));
         }
 
         return Flow.CONTINUE;

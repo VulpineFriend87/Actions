@@ -32,7 +32,7 @@ class ActionExecutorTest {
     }
 
     private ActionContext context() {
-        return ActionContext.builder(scheduler).build();
+        return ActionContext.builder(scheduler.platform()).build();
     }
 
     /** Records that it ran, then returns whatever flow the test asked for. */

@@ -29,7 +29,7 @@ class ConditionTest {
     }
 
     private ActionContext context() {
-        return ActionContext.builder(new FakeScheduler())
+        return ActionContext.builder(new FakeScheduler().platform())
                 .value("level", 12)
                 .value("balance", 2500.5)
                 .value("world", "lobby")
@@ -88,7 +88,7 @@ class ConditionTest {
         // Lexically "9" > "10"; numerically it is not. Getting this wrong is the
         // classic silent bug in config-driven comparisons.
         assertTrue(Condition.parse("%n% > 9").test(
-                ActionContext.builder(new FakeScheduler()).value("n", 10).build()));
+                ActionContext.builder(new FakeScheduler().platform()).value("n", 10).build()));
     }
 
     @Test
@@ -184,7 +184,7 @@ class ConditionTest {
     @DisplayName("an unresolved placeholder is false and warns once, not every call")
     void unresolvedPlaceholder() {
 
-        ActionContext bare = ActionContext.builder(new FakeScheduler()).build();
+        ActionContext bare = ActionContext.builder(new FakeScheduler().platform()).build();
         Condition condition = Condition.parse("%player_level% >= 10");
 
         assertFalse(condition.test(bare));

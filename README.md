@@ -42,11 +42,13 @@ dependencies {
     implementation("top.vulpine:actions:0.1.0")
     implementation("eu.okaeri:okaeri-configs-yaml-bukkit:5.0.13")
     implementation("eu.okaeri:okaeri-configs-serdes-bukkit:5.0.13")
-    implementation("com.tcoded:FoliaLib:0.5.1")
 
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
 }
 ```
+
+FoliaLib comes with the library, so there is nothing to declare for it — but it does
+need relocating along with everything else.
 
 Shade and relocate the libraries into your plugin:
 
@@ -99,9 +101,8 @@ Config config = ConfigManager.create(Config.class, it -> {
 
 ```java
 FoliaLib foliaLib = new FoliaLib(this);
-ActionScheduler scheduler = new FoliaLibScheduler(foliaLib);
 
-ActionContext context = ActionContext.builder(scheduler)
+ActionContext context = ActionContext.builder(foliaLib.getScheduler())
         .player(player)
         .value("player", player.getName())
         .build();
@@ -702,27 +703,23 @@ To start from an empty vocabulary instead of the built-ins, use
 
 ## Scheduling
 
-`ActionScheduler` has two methods. A FoliaLib-backed implementation ships with the
-library and covers Folia, Paper, Spigot and legacy Bukkit:
+Actions are dispatched through [FoliaLib](https://github.com/TechnicallyCoded/FoliaLib),
+which picks the right scheduler for Folia, Paper, Spigot or legacy Bukkit. Give the
+context its scheduler:
 
 ```java
-ActionScheduler scheduler = new FoliaLibScheduler(new FoliaLib(this));
+FoliaLib foliaLib = new FoliaLib(this);
+
+ActionContext context = ActionContext.builder(foliaLib.getScheduler())
+        .player(player)
+        .build();
 ```
 
-FoliaLib is a `compileOnly` dependency here, so your plugin declares and relocates it
-(see [Install](#install)). If your plugin already uses FoliaLib, pass in the instance
-you already have.
+If your plugin already uses FoliaLib, pass the scheduler you already have rather than
+building a second one.
 
-To use something else, implement the interface:
-
-```java
-public interface ActionScheduler {
-    void run(Entity entity, Runnable task);
-    Cancellable runLater(Entity entity, Runnable task, long ticks);
-}
-```
-
-A null entity means the work is not tied to one, and belongs on the global region.
+Work that concerns a player runs on that player's region, and a delay resumes there
+too. A run with no player has no region to belong to, so it goes to the global one.
 
 ---
 
